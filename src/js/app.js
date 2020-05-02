@@ -1,14 +1,14 @@
 import TransferMessage from './transfer-message.js';
-import Popup from './popup.js';
+import Popup from './Popup.js';
 import RecAV from './recAV.js';
-import getGEO from './getGEO.js';
+import getGEO from './getGeoposition.js';
 import Bot from './bot.js';
 
 const uuid = require('uuid');
 
 const elAddFile = document.querySelector('.add-file');
 const popup = new Popup();
-popup.init();
+popup.create();
 
 let transferMsg = {};
 const elWindowStart = document.querySelector('.window');

@@ -32,9 +32,10 @@ export default class AVrec {
 
   async audioRecorder(tVideo = false) {
     if (!navigator.mediaDevices) {
-      const title = 'Что-то пошло не так';
-      const msg = 'Браузер не поддерживает';
-      this.popup.showPopup('', title, msg);
+      // const title = 'Что-то пошло не так';
+      const msg = 'Your browser don`t support this function';
+      // this.popup.showPopup('', title, msg);
+      this.popup.showPopup('', msg);
       return;
     }
     try {
@@ -43,9 +44,10 @@ export default class AVrec {
       let timers = null;
 
       if (!window.MediaRecorder) {
-        const title = 'Что-то пошло не так';
-        const msg = 'Дайте разрешение на запись звука в браузере';
-        this.popup.showPopup('', title, msg);
+        // const title = 'Что-то пошло не так';
+        const msg = 'Please, give permission in your browser to record audio content';
+        // this.popup.showPopup('', title, msg);
+        this.popup.showPopup('', msg);
         return;
       }
 
@@ -138,10 +140,10 @@ export default class AVrec {
       });
     } catch (e) {
       // console.error(e);
-      const title = 'Что-то пошло не так';
-      const msg = 'Дайте разрешение на запись звука/видео в браузере';
-      // const msg = 'Запрошенное устройство не найдено!!!!';
-      this.popup.showPopup('', title, msg);
+      // const title = 'Что-то пошло не так';
+      const msg = 'Please, give permission in your browser to record audio/video';
+      // this.popup.showPopup('', title, msg);
+      this.popup.showPopup('', msg);
       this.elStartRec.classList.remove('hidden');
       this.elStopRec.classList.add('hidden');
     }
