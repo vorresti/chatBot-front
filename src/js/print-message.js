@@ -1,151 +1,152 @@
 /* eslint-disable class-methods-use-this */
+import getDate from './getDate';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 
-function convertDate(value) {
-  const rValue = value < 10 ? `0${value}` : value;
-  return rValue;
-}
+// function convertDate(value) {
+//   const rValue = value < 10 ? `0${value}` : value;
+//   return rValue;
+// }
 
-function printData(valueDate) {
-  const itemDate = new Date(valueDate);
-  const date = convertDate(itemDate.getDate());
-  const month = convertDate(itemDate.getMonth() + 1);
-  const year = convertDate(itemDate.getFullYear());
-  const hours = convertDate(itemDate.getHours());
-  const minut = convertDate(itemDate.getMinutes());
-  // const second = convertDate(itemDate.getSeconds());
-  const itemCreated = `${hours}:${minut} ${date}.${month}.${year}`;
-  return itemCreated;
-}
+// function printData(valueDate) {
+//   const itemDate = new Date(valueDate);
+//   const date = convertDate(itemDate.getDate());
+//   const month = convertDate(itemDate.getMonth() + 1);
+//   const year = convertDate(itemDate.getFullYear());
+//   const hours = convertDate(itemDate.getHours());
+//   const minut = convertDate(itemDate.getMinutes());
+//   // const second = convertDate(itemDate.getSeconds());
+//   const itemCreated = `${hours}:${minut} ${date}.${month}.${year}`;
+//   return itemCreated;
+// }
 
 export default class PrintMessage {
   constructor(parentEl, crypton) {
     this.parentEl = parentEl;
-    this.crypton = crypton;
+    this.crypton = crypton;// may be crypton is unnecessary here???????????????????????????????????????????????????????
   }
 
-  printMsg(messageObj, insertPosition) {
-    const itemMsg = messageObj.msg;
-    let msgHtml = '';
+  printMsg(message, positionForInsert) {
+    const currentMessage = message.msg;
+    let messageMarkup = '';
     let cssClassList = 'item-message loaded no-favorit';
 
-    switch (messageObj.type) {
+    switch (message.type) {
       case 'botMsg':
-        msgHtml = this.printTextMsg(itemMsg);
+        messageMarkup = this.getTextMarkup(currentMessage);
         cssClassList = 'item-message loaded no-favorit bot';
         break;
       case 'textMsg':
-        msgHtml = this.printTextMsg(itemMsg);
+        messageMarkup = this.getTextMarkup(currentMessage);
         break;
       case 'image':
-        msgHtml = this.printImg(itemMsg, messageObj.name);
+        messageMarkup = this.getImgMarkup(currentMessage, message.name);
         break;
       case 'video':
-        msgHtml = this.printVideo(itemMsg, messageObj.name);
+        messageMarkup = this.getVideoMarkup(currentMessage, message.name);
         break;
       case 'audio':
-        msgHtml = this.printAudio(itemMsg, messageObj.name);
+        messageMarkup = this.getAudioMarkup(currentMessage, message.name);
         break;
       default:
-        msgHtml = this.printApp(itemMsg, messageObj.name);
+        messageMarkup = this.getAppMarkup(currentMessage, message.name);
         break;
     }
 
-    const elItemMsg = document.createElement('div');
-    elItemMsg.className = cssClassList;
-    elItemMsg.dataset.id = messageObj.id;
-    elItemMsg.innerHTML = `
-    ${msgHtml}
+    const newMessage = document.createElement('div');
+    newMessage.className = cssClassList;
+    newMessage.dataset.id = message.id;
+    newMessage.innerHTML = `
+    ${messageMarkup}
     <div class="footer-msg">
-      <div class="like av${messageObj.favorit ? ' favorit' : ''}"></div>
-      <div class="date-time">${printData(messageObj.dateTime)}</div>
+      <div class="like av${message.favorit ? ' favorit' : ''}"></div>
+      <div class="date-time">${getDate(message.dateTime)}</div>
     </div>
     `;
-    if (insertPosition === 'end') {
-      this.parentEl.appendChild(elItemMsg);
-      this.parentEl.scrollTo(0, elItemMsg.offsetTop);
+    if (positionForInsert === 'end') {
+      this.parentEl.appendChild(newMessage);
+      this.parentEl.scrollTo(0, newMessage.offsetTop);
     } else {
-      this.parentEl.prepend(elItemMsg);
+      this.parentEl.prepend(newMessage);
     }
   }
 
-  printTextMsg(message) {
-    const regExp = /(https?:\/\/)[%:\w.\/-]+/;// eslint-disable-line no-useless-escape
-    const regExpCod = /```(.|\n)*?```/;
-    let htmlMsg = message;
+  getTextMarkup(message) {
+    const regExpForLinks = /(https?:\/\/)[%:\w.\/-]+/;// eslint-disable-line no-useless-escape
+    const regExpForCode = /```(.|\n)*?```/;
+    let messageMarkup = message;
 
-    if (message.search(regExp) !== -1) {
-      htmlMsg = message.replace(regExp, `
-      <a href="${message.match(regExp)[0]}">${message.match(regExp)[0]}</a>
+    if (message.search(regExpForLinks) !== -1) {
+      messageMarkup = message.replace(regExpForLinks, `
+      <a href="${message.match(regExpForLinks)[0]}">${message.match(regExpForLinks)[0]}</a>
     `);
     }
 
-    if (message.search(regExpCod) !== -1) {
-      const textCode = message.match(regExpCod)[0].replace(/```\n?/g, '');
-      const highlightedCode = hljs.highlightAuto(textCode.trim()).value;
-      htmlMsg = message.replace(regExpCod, `
+    if (message.search(regExpForCode) !== -1) {
+      const codeFromMessage = message.match(regExpForCode)[0].replace(/```\n?/g, '');
+      const highlightedCode = hljs.highlightAuto(codeFromMessage.trim()).value;
+      messageMarkup = message.replace(regExpForCode, `
       <pre><code>${highlightedCode}</code></pre>
       `);
     }
     return `
-      ${htmlMsg}
+      ${messageMarkup}
     `;
   }
 
-  printImg(img, name) {
-    const htmlMsg = `
-      <img src="${img}">
+  getImgMarkup(message, name) {
+    const imgMarkup = `
+      <img src="${message}">
       <p class="name">${name}</p>
-      <a  class="download av" href="${img}" download="image"></a>
+      <a class="download av" href="${message}" download="image"></a>
     `;
     return `
-      ${htmlMsg}
+      ${imgMarkup}
     `;
   }
 
-  printVideo(obj, name) {
+  getVideoMarkup(message, name) {
     // added from me
     let currentName = name;
     if (!name) {
       currentName = 'recorded video';
     }
     // end
-    const htmlMsg = `
-      <video src="${obj}" controls="controls"></video>
+    const videoMarkup = `
+      <video src="${message}" controls="controls"></video>
       <p class="name">${currentName}</p>
-      <a class="download av" href="${obj}" download="video"></a>
+      <a class="download av" href="${message}" download="video"></a>
     `;
     return `
-      ${htmlMsg}
+      ${videoMarkup}
     `;
   }
 
-  printAudio(obj, name) {
+  getAudioMarkup(message, name) {
     // added from me
     let currentName = name;
     if (!name) {
       currentName = 'recorded audio';
     }
     // end
-    const htmlMsg = `
-      <audio src="${obj}" controls="controls"></audio>
+    const audioMarkup = `
+      <audio src="${message}" controls="controls"></audio>
       <p class="name">${currentName}</p>
-      <a class="download av" href="${obj}" download="audio"></a>
+      <a class="download av" href="${message}" download="audio"></a>
     `;
     return `
-      ${htmlMsg}
+      ${audioMarkup}
     `;
   }
 
-  printApp(obj, name) {
-    const htmlMsg = `
+  getAppMarkup(message, name) {
+    const appMarkup = `
       <div class="applicat"></div>
       <p class="name">${name}</p>
-      <a class="download av" href="${obj}" download="app"></a>
+      <a class="download av" href="${message}" download="app"></a>
     `;
     return `
-      ${htmlMsg}
+      ${appMarkup}
     `;
   }
 }
