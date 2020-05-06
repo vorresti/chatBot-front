@@ -1,6 +1,6 @@
 import Controller from './Controller.js';
 import Popup from './Popup.js';
-import RecAV from './recAV.js';
+import Recorder from './Recorder.js';
 import getGEO from './getGeoposition.js';
 import Bot from './bot.js';
 
@@ -28,7 +28,7 @@ submitName.addEventListener('click', async () => {
   elLegends.classList.remove('hidden');
   elWindowStart.classList.add('hidden');
   // **************** rec AV *********************
-  const recorder = new RecAV(popup, controller);
+  const recorder = new Recorder(popup, controller);
   recorder.init();
 // **************** rec AV *********************
 });
