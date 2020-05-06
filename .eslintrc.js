@@ -30,7 +30,8 @@ module.exports = {
       "import/extensions": [
         "error",
         "ignorePackages"
-      ]
+      ],
+      "no-console": "off"
       // "linebreak-style":
       // [
       //   "error",

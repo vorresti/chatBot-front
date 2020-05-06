@@ -129,7 +129,7 @@ elInput.addEventListener('keypress', (evt) => {
     //   return;
     // }
 
-    const objMessage = {
+    const messageFromUserObject = {
       id: uuid.v4(),
       type: 'textMsg',
       pin: false,
@@ -137,14 +137,14 @@ elInput.addEventListener('keypress', (evt) => {
       msg: elInput.value,
       dateTime: new Date(),
     };
-    transferMsg.sendMessage(objMessage);
-    let enteredMessage = elInput.value;
+    transferMsg.sendMessage(messageFromUserObject);
+    const enteredMessage = elInput.value;
     elInput.value = '';
 
     if (enteredMessage.search(regExpBot) !== -1) {
       console.log('bot');
       const botAnswer = funcBot.getAnswer(enteredMessage);
-      const objMessage = {
+      const messageFromBotObject = {
         id: uuid.v4(),
         type: 'botMsg',
         pin: false,
@@ -152,7 +152,7 @@ elInput.addEventListener('keypress', (evt) => {
         msg: botAnswer,
         dateTime: new Date(),
       };
-      transferMsg.sendMessage(objMessage);    
+      transferMsg.sendMessage(messageFromBotObject);
     }
   }
 });
