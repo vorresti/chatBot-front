@@ -1,4 +1,4 @@
-import TransferMessage from './Controller.js';
+import Controller from './Controller.js';
 import Popup from './Popup.js';
 import RecAV from './recAV.js';
 import getGEO from './getGeoposition.js';
@@ -10,25 +10,25 @@ const elAddFile = document.querySelector('.add-file');
 const popup = new Popup();
 popup.create();
 
-let transferMsg = {};
+// let transferMsg = {};
+let controller = null;
 const elWindowStart = document.querySelector('.window');
 const elLegends = document.querySelector('.legends');
 const submitName = document.querySelector('#submit-name');
-// const funcBot = new Bot(document.querySelector('.display-legends'));
 const funcBot = new Bot();
 
 submitName.addEventListener('click', async () => {
   const inputName = document.querySelector('#inp-name');
   const keyCrypt = inputName.value;
 
-  transferMsg = new TransferMessage(keyCrypt);
-  transferMsg.init();
+  controller = new Controller(keyCrypt);
+  controller.init();
 
   inputName.value = '';
   elLegends.classList.remove('hidden');
   elWindowStart.classList.add('hidden');
   // **************** rec AV *********************
-  const recorder = new RecAV(popup, transferMsg);
+  const recorder = new RecAV(popup, controller);
   recorder.init();
 // **************** rec AV *********************
 });
@@ -53,7 +53,7 @@ function loadFile(file) {
       msg: fr.result,
       dateTime: new Date(),
     };
-    transferMsg.sendMessage(objMessage);
+    controller.sendMessage(objMessage);
   };
 }
 
@@ -86,7 +86,7 @@ buttonSelectFile.addEventListener('change', (event) => {
 
 elSelectFile.addEventListener('scroll', (event) => {
   if (event.target.scrollTop === 0) {
-    transferMsg.lazyLoad();
+    controller.lazyLoad();
   }
 });
 
@@ -97,12 +97,12 @@ elSelectFile.addEventListener('click', (event) => {
     if (itemEl.classList.contains('favorit')) {
       itemEl.classList.remove('favorit');
       parentEl.classList.add('no-favorit');
-      transferMsg.changeFavorit(parentEl.dataset.id, false);
+      controller.changeFavorit(parentEl.dataset.id, false);
       return;
     }
     itemEl.classList.add('favorit');
     parentEl.classList.remove('no-favorit');
-    transferMsg.changeFavorit(parentEl.dataset.id, true);
+    controller.changeFavorit(parentEl.dataset.id, true);
   }
 });
 
@@ -138,7 +138,7 @@ elInput.addEventListener('keypress', (evt) => {
       msg: elInput.value,
       dateTime: new Date(),
     };
-    transferMsg.sendMessage(messageFromUserObject);
+    controller.sendMessage(messageFromUserObject);
     const enteredMessage = elInput.value;
     elInput.value = '';
 
@@ -153,7 +153,7 @@ elInput.addEventListener('keypress', (evt) => {
         msg: botAnswer,
         dateTime: new Date(),
       };
-      transferMsg.sendMessage(messageFromBotObject);
+      controller.sendMessage(messageFromBotObject);
     }
   }
 });
@@ -192,12 +192,12 @@ elGEO.addEventListener('click', async () => {
     msg: GEOteg,
     dateTime: new Date(),
   };
-  transferMsg.sendMessage(objMessage);
+  controller.sendMessage(objMessage);
 });
 
 // **************** export *********************
 const elExport = document.querySelector('#export-history');
 
 elExport.addEventListener(('click'), async () => {
-  transferMsg.exportHistory();
+  controller.exportHistory();
 });
