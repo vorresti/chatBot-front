@@ -1,4 +1,4 @@
-import TransferMessage from './transfer-message.js';
+import TransferMessage from './Controller.js';
 import Popup from './Popup.js';
 import RecAV from './recAV.js';
 import getGEO from './getGeoposition.js';
@@ -14,7 +14,8 @@ let transferMsg = {};
 const elWindowStart = document.querySelector('.window');
 const elLegends = document.querySelector('.legends');
 const submitName = document.querySelector('#submit-name');
-const funcBot = new Bot(document.querySelector('.display-legends'));
+// const funcBot = new Bot(document.querySelector('.display-legends'));
+const funcBot = new Bot();
 
 submitName.addEventListener('click', async () => {
   const inputName = document.querySelector('#inp-name');

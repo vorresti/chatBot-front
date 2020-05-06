@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import hljs from 'highlight.js';
+import highlighter from 'highlight.js';
 import getDate from './getDate.js';
 import 'highlight.js/styles/github.css';
 
 export default class Messanger {
-  constructor(parentEl, crypton) {
-    this.parentEl = parentEl;
+  constructor(messagesField, crypton) {
+    this.messagesField = messagesField;
     this.crypton = crypton;// may be crypton is unnecessary here?????????????????????????????
   }
 
@@ -47,10 +47,10 @@ export default class Messanger {
     </div>
     `;
     if (positionForInsert === 'end') {
-      this.parentEl.appendChild(newMessage);
-      this.parentEl.scrollTo(0, newMessage.offsetTop);
+      this.messagesField.appendChild(newMessage);
+      this.messagesField.scrollTo(0, newMessage.offsetTop);
     } else {
-      this.parentEl.prepend(newMessage);
+      this.messagesField.prepend(newMessage);
     }
   }
 
@@ -67,7 +67,7 @@ export default class Messanger {
 
     if (message.search(regExpForCode) !== -1) {
       const codeFromMessage = message.match(regExpForCode)[0].replace(/```\n?/g, '');
-      const highlightedCode = hljs.highlightAuto(codeFromMessage.trim()).value;
+      const highlightedCode = highlighter.highlightAuto(codeFromMessage.trim()).value;
       messageMarkup = message.replace(regExpForCode, `
       <pre><code>${highlightedCode}</code></pre>
       `);
