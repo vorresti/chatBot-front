@@ -3,30 +3,13 @@ import hljs from 'highlight.js';
 import getDate from './getDate.js';
 import 'highlight.js/styles/github.css';
 
-// function convertDate(value) {
-//   const rValue = value < 10 ? `0${value}` : value;
-//   return rValue;
-// }
-
-// function printData(valueDate) {
-//   const itemDate = new Date(valueDate);
-//   const date = convertDate(itemDate.getDate());
-//   const month = convertDate(itemDate.getMonth() + 1);
-//   const year = convertDate(itemDate.getFullYear());
-//   const hours = convertDate(itemDate.getHours());
-//   const minut = convertDate(itemDate.getMinutes());
-//   // const second = convertDate(itemDate.getSeconds());
-//   const itemCreated = `${hours}:${minut} ${date}.${month}.${year}`;
-//   return itemCreated;
-// }
-
-export default class PrintMessage {
+export default class Messanger {
   constructor(parentEl, crypton) {
     this.parentEl = parentEl;
-    this.crypton = crypton;// may be crypton is unnecessary here???????????????????????????????????
+    this.crypton = crypton;// may be crypton is unnecessary here?????????????????????????????
   }
 
-  printMsg(message, positionForInsert) {
+  addMessage(message, positionForInsert) {
     const currentMessage = message.msg;
     let messageMarkup = '';
     let cssClassList = 'item-message loaded no-favorit';

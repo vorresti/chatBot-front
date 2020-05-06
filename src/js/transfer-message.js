@@ -1,5 +1,5 @@
 import Worker from './web-worker.js';
-import PrintMessage from './print-message.js';
+import Messanger from './Messanger.js';
 import Crypton from './crypt.js';
 
 const localArrMessages = [];
@@ -18,7 +18,7 @@ export default class TransferMessage {
 
   async init() {
     this.elListMessages = document.querySelector('.display-legends');
-    this.printMsg = new PrintMessage(this.elListMessages, this.crypton);
+    this.messanger = new Messanger(this.elListMessages, this.crypton);
     this.initWS();
     const resp = await fetch(`${this.url}initmsg`);
     await resp.text();
@@ -45,7 +45,7 @@ export default class TransferMessage {
       if (deCrypt && deCrypt !== null) {
         inpMsg.msg = deCrypt;
         localArrMessages.push(inpMsg);
-        this.printMsg.printMsg(inpMsg, 'end');
+        this.messanger.addMessage(inpMsg, 'end');
         document.querySelector(`[data-id="${inpMsg.id}"]`).classList.remove('loaded');
       }
     });
@@ -61,7 +61,7 @@ export default class TransferMessage {
 
   sendMessage(message) {
     localArrMessages.push(message);
-    this.printMsg.printMsg(message, 'end');
+    this.messanger.addMessage(message, 'end');
 
     if (this.ws.readyState === WebSocket.OPEN) {
       try {
@@ -102,7 +102,7 @@ export default class TransferMessage {
       worker.addEventListener('message', (event) => {
         if (event.data.msg && event.data.msg !== null) {
           localArrMessages.push(event.data);
-          this.printMsg.printMsg(event.data, 'start');
+          this.messanger.addMessage(event.data, 'start');
           document.querySelector(`[data-id="${event.data.id}"]`).classList.remove('loaded');
         }
         lengthDown -= 1;
