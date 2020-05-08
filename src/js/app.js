@@ -6,19 +6,19 @@ import Bot from './Bot.js';
 
 const uuid = require('uuid');
 
-const elAddFile = document.querySelector('.add-file');
+const elAddFile = document.querySelector('.handle-add-file');
 const popup = new Popup();
 popup.create();
 
 // let transferMsg = {};
 let controller = null;
-const elWindowStart = document.querySelector('.window');
-const elLegends = document.querySelector('.legends');
-const submitName = document.querySelector('#submit-name');
+const elWindowStart = document.querySelector('.password-window');
+const elLegends = document.querySelector('.app-window');
+const submitName = document.querySelector('#password-ok-button');
 const funcBot = new Bot();
 
 submitName.addEventListener('click', async () => {
-  const inputName = document.querySelector('#inp-name');
+  const inputName = document.querySelector('#password-input-field');
   const keyCrypt = inputName.value;
 
   controller = new Controller(keyCrypt);
@@ -58,7 +58,7 @@ function loadFile(file) {
 }
 
 // ***************************** add file ****************************
-const buttonSelectFile = document.querySelector('#button-select');
+const buttonSelectFile = document.querySelector('#input-type-file');
 const elSelectFile = document.querySelector('#drop-file');
 const elFavorits = document.querySelector('#favorits');
 
@@ -92,7 +92,7 @@ elSelectFile.addEventListener('scroll', (event) => {
 
 elSelectFile.addEventListener('click', (event) => {
   const itemEl = event.target;
-  if (itemEl.classList.contains('like')) {
+  if (itemEl.classList.contains('favor')) {
     const parentEl = itemEl.closest('.item-message');
     if (itemEl.classList.contains('favorit')) {
       itemEl.classList.remove('favorit');
@@ -117,7 +117,7 @@ elFavorits.addEventListener('click', () => {
 });
 
 // **************** input text *********************
-const elInput = document.querySelector('#el-input');
+const elInput = document.querySelector('#input-message-field');
 
 elInput.addEventListener('keypress', (evt) => {
   if (evt.key === 'Enter') {
@@ -178,7 +178,7 @@ elPopupOk.addEventListener('click', () => {
 });
 
 // **************** GEO *********************
-const elGEO = document.querySelector('.geo-teg');
+const elGEO = document.querySelector('.geo-button');
 
 elGEO.addEventListener('click', async () => {
   const GEOteg = await getGEO(popup);

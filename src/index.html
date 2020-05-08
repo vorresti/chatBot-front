@@ -7,32 +7,32 @@
     <title>Document</title>
 </head>
 <body>
-  <div class="window">
-    <p>Введите пароль</p>
-    <input type="text" id="inp-name">
-    <div class="button" id="submit-name">Продолжить</div>
+  <div class="password-window">
+    <p>Enter a password to see your history</p>
+    <input type="text" id="password-input-field">
+    <div class="button" id="password-ok-button">OK</div>
   </div>
-  <div class="legends hidden">
-    <div class="top-block">
-      <input type="file" id="button-select">
-      <div class="add-file av"></div>
-      <div id="favorits" class="like av"></div>
+  <div class="app-window hidden">
+    <div class="app-header">
+      <input type="file" id="input-type-file">
+      <div class="handle-add-file av"></div>
+      <div id="favorits" class="favor av"></div>
     </div>
-    <div id="drop-file" class="display-legends">
+    <div id="drop-file" class="messages-field">
 
     </div>
-    <div class="inputs">
-      <textarea type="text" id="el-input"></textarea>
-      <div class="button-av">
-        <div class="start-rec">
-          <div id="audio" class="av"></div>
-          <div id="video" class="av"></div>
-          <div class="geo-teg av"></div>
+    <div class="input-container">
+      <textarea type="text" id="input-message-field"></textarea>
+      <div class="av-buttons">
+        <div class="recording-buttons">
+          <div id="audio-rec-button" class="av"></div>
+          <div id="video-rec-button" class="av"></div>
+          <div class="geo-button av"></div>
         </div>
-        <div class="stop-rec hidden">
-          <div id="play-ok" class="av"></div>
+        <div class="stop-recording-buttons hidden">
+          <div id="save-rec-button" class="av"></div>
           <span id="timer">00:00</span>
-          <div id="play-cancel" class="av"></div>
+          <div id="cancel-rec-button" class="av"></div>
         </div>
       </div>
     </div>

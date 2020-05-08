@@ -15,7 +15,7 @@ export default class Controller {
   }
 
   async init() {
-    this.messagesField = document.querySelector('.display-legends');
+    this.messagesField = document.querySelector('.messages-field');
     this.messanger = new Messanger(this.messagesField, this.crypton);
     this.initWS();
     const response = await fetch(`${this.url}initmsg`);

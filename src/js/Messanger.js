@@ -42,7 +42,7 @@ export default class Messanger {
     newMessage.innerHTML = `
     ${messageMarkup}
     <div class="footer-msg">
-      <div class="like av${message.favorit ? ' favorit' : ''}"></div>
+      <div class="favor av${message.favorit ? ' favorit' : ''}"></div>
       <div class="date-time">${getDate(message.dateTime)}</div>
     </div>
     `;

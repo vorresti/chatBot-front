@@ -7,13 +7,13 @@ export default class Recorder {
   }
 
   init() {
-    this.audioRecButton = document.querySelector('#audio');
-    this.videoRecButton = document.querySelector('#video');
-    this.saveRecButton = document.querySelector('#play-ok');
-    this.cancelRecButton = document.querySelector('#play-cancel');
+    this.audioRecButton = document.querySelector('#audio-rec-button');
+    this.videoRecButton = document.querySelector('#video-rec-button');
+    this.saveRecButton = document.querySelector('#save-rec-button');
+    this.cancelRecButton = document.querySelector('#cancel-rec-button');
     this.recTimer = document.querySelector('#timer');
-    this.recordingButtons = document.querySelector('.start-rec');
-    this.stopRecButtons = document.querySelector('.stop-rec');
+    this.recordingButtons = document.querySelector('.recording-buttons');
+    this.stopRecButtons = document.querySelector('.stop-recording-buttons');
 
     this.audioRecButton.addEventListener('click', () => {
       this.recordingButtons.classList.add('hidden');
