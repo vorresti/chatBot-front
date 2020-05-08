@@ -1,8 +1,3 @@
-// function callPopup(msg, popup) {
-//   const title = 'Что-то пошло не так';
-//   popup.showPopup('get', title, msg);
-// }
-
 export default function getGeoposition(popup) {
   console.log('Getting Geoposition...');
   const popupInputField = document.querySelector('.popup-inp');

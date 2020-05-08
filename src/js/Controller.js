@@ -1,6 +1,6 @@
 import Worker from './web-worker.js';
 import Messanger from './Messanger.js';
-import Crypton from './crypt.js';
+import Crypton from './Crypt.js';
 
 const currentMessages = [];
 const pathToServer = 'ahj-diploma.herokuapp.com';

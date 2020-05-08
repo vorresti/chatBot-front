@@ -14,6 +14,7 @@ function deCrypt(objMsg, crypton) {
     const retStr = bytes.toString(CryptoJS.enc.Utf8);
     return retStr;
   } catch (e) {
+    console.log('error deCrypt in worker');
     console.log(e);
     return null;
   }

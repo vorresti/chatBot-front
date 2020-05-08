@@ -2,7 +2,7 @@ import Controller from './Controller.js';
 import Popup from './Popup.js';
 import Recorder from './Recorder.js';
 import getGEO from './getGeoposition.js';
-import Bot from './bot.js';
+import Bot from './Bot.js';
 
 const uuid = require('uuid');
 

@@ -21,16 +21,6 @@ export default class Popup {
     this.popupCancelButton = document.querySelector('.popup-cancel');
   }
 
-  // showPopup(type, header, msg) {
-  //   this.elPopup.classList.remove('hidden');
-  //   this.elPopupHeader.innerText = header;
-  //   this.elPopupMsg.innerText = msg;
-  //   if (type === 'get') {
-  //     this.elPopupInput.classList.remove('hidden');
-  //     this.btnCancel.classList.remove('hidden');
-  //   }
-  // }
-
   showPopup(type, message) {
     this.popover.classList.remove('hidden');
     this.popupHeader.innerText = 'Something went wrong...';
