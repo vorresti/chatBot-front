@@ -22,6 +22,8 @@ export default class Crypt {
         console.log(e);
         return null;
       }
+    } else {
+      return null;
     }
   }
 }
