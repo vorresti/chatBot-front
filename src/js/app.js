@@ -1,151 +1,156 @@
 import Controller from './Controller.js';
 import Popup from './Popup.js';
 import Recorder from './Recorder.js';
-import getGEO from './getGeoposition.js';
 import Bot from './Bot.js';
+import getGeoposition from './getGeoposition.js';
 
 const uuid = require('uuid');
 
-const elAddFile = document.querySelector('.handle-add-file');
+const bot = new Bot();
+
 const popup = new Popup();
 popup.create();
 
-// let transferMsg = {};
 let controller = null;
-const elWindowStart = document.querySelector('.password-window');
-const elLegends = document.querySelector('.app-window');
-const submitName = document.querySelector('#password-ok-button');
-const funcBot = new Bot();
 
-submitName.addEventListener('click', async () => {
-  const inputName = document.querySelector('#password-input-field');
-  const keyCrypt = inputName.value;
+// ******************** enter password *************************************
+
+const passwordWindow = document.querySelector('.password-window');
+const passwordOkButton = document.querySelector('#password-ok-button');
+const appWindow = document.querySelector('.app-window');
+
+passwordOkButton.addEventListener('click', async () => {
+  const passwordInputField = document.querySelector('#password-input-field');
+  const keyCrypt = passwordInputField.value;
 
   controller = new Controller(keyCrypt);
   controller.init();
 
-  inputName.value = '';
-  elLegends.classList.remove('hidden');
-  elWindowStart.classList.add('hidden');
-  // **************** rec AV *********************
+  passwordInputField.value = '';
+  appWindow.classList.remove('hidden');
+  passwordWindow.classList.add('hidden');
+
   const recorder = new Recorder(popup, controller);
   recorder.init();
-// **************** rec AV *********************
 });
 
-// **************** input file *********************
-function loadFile(file) {
+// ******************** upload file *************************************
+function upload(file) {
   console.log(file.name);
-  const itemId = uuid.v4();
-  const regExp = /[a-z]+/;
-  const typeFile = file.type.match(regExp)[0];
+  const fileID = uuid.v4();
+  const typeRegExp = /[a-z]+/;
+  const typeFile = file.type.match(typeRegExp)[0];
 
-  const fr = new FileReader();
-  fr.readAsDataURL(file);
+  const fileReader = new FileReader();
+  fileReader.readAsDataURL(file);
 
-  fr.onload = () => {
-    const objMessage = {
-      id: itemId,
+  fileReader.onload = () => {
+    const message = {
+      id: fileID,
       type: typeFile,
       pin: false,
       favorit: false,
       name: file.name,
-      msg: fr.result,
+      msg: fileReader.result,
       dateTime: new Date(),
     };
-    controller.sendMessage(objMessage);
+    controller.sendMessage(message);
   };
 }
 
-// ***************************** add file ****************************
-const buttonSelectFile = document.querySelector('#input-type-file');
-const elSelectFile = document.querySelector('#drop-file');
-const elFavorits = document.querySelector('#favorits');
+// ******************** post files *************************************
 
-elAddFile.addEventListener('click', () => {
-  buttonSelectFile.value = null;
-  buttonSelectFile.dispatchEvent(new MouseEvent('click'));
+const addFileButton = document.querySelector('.handle-add-file');
+const inputTypeFile = document.querySelector('#input-type-file');
+const dropFile = document.querySelector('#drop-file');
+
+addFileButton.addEventListener('click', () => {
+  inputTypeFile.value = null;
+  inputTypeFile.dispatchEvent(new MouseEvent('click'));
 });
 
-elSelectFile.addEventListener('dragover', (event) => {
+dropFile.addEventListener('dragover', (event) => {
   event.preventDefault();
 });
 
-elSelectFile.addEventListener('drop', (event) => {
+dropFile.addEventListener('drop', (event) => {
   event.preventDefault();
   const files = Array.from(event.dataTransfer.files);
-  for (const item of files) {
-    loadFile(item);
+  for (const file of files) {
+    upload(file);
   }
 });
 
-buttonSelectFile.addEventListener('change', (event) => {
+inputTypeFile.addEventListener('change', (event) => {
   const files = Array.from(event.currentTarget.files);
-  loadFile(files[0]);
+  upload(files[0]);
 });
 
-elSelectFile.addEventListener('scroll', (event) => {
+// ***************** lazy-load scroll ************************************
+
+dropFile.addEventListener('scroll', (event) => {
   if (event.target.scrollTop === 0) {
     controller.lazyLoad();
   }
 });
 
-elSelectFile.addEventListener('click', (event) => {
-  const itemEl = event.target;
-  if (itemEl.classList.contains('favor')) {
-    const parentEl = itemEl.closest('.item-message');
-    if (itemEl.classList.contains('favorit')) {
-      itemEl.classList.remove('favorit');
-      parentEl.classList.add('no-favorit');
-      controller.changeFavorit(parentEl.dataset.id, false);
+// ***************** favorits controls ************************************
+
+dropFile.addEventListener('click', (event) => {
+  const selectedElement = event.target;
+  if (selectedElement.classList.contains('favor')) {
+    const parentElement = selectedElement.closest('.item-message');
+    if (selectedElement.classList.contains('favorit')) {
+      selectedElement.classList.remove('favorit');
+      parentElement.classList.add('no-favorit');
+      controller.changeFavorit(parentElement.dataset.id, false);
       return;
     }
-    itemEl.classList.add('favorit');
-    parentEl.classList.remove('no-favorit');
-    controller.changeFavorit(parentEl.dataset.id, true);
+    selectedElement.classList.add('favorit');
+    parentElement.classList.remove('no-favorit');
+    controller.changeFavorit(parentElement.dataset.id, true);
   }
 });
 
-elFavorits.addEventListener('click', () => {
-  if (elFavorits.classList.contains('favorit')) {
-    elFavorits.classList.remove('favorit');
-    elFavorits.innerHTML = '';
+const favoritsList = document.querySelector('#favorits');
+
+favoritsList.addEventListener('click', () => {
+  if (favoritsList.classList.contains('favorit')) {
+    favoritsList.classList.remove('favorit');
+    favoritsList.innerHTML = '';
     return;
   }
-  elFavorits.classList.add('favorit');
-  elFavorits.innerHTML = '<style>.no-favorit {display: none;}</style>';
+  favoritsList.classList.add('favorit');
+  favoritsList.innerHTML = '<style>.no-favorit {display: none;}</style>';
 });
 
-// **************** input text *********************
-const elInput = document.querySelector('#input-message-field');
+// ***************** post text message ************************************
 
-elInput.addEventListener('keypress', (evt) => {
+const inputMessageField = document.querySelector('#input-message-field');
+
+inputMessageField.addEventListener('keypress', (evt) => {
   if (evt.key === 'Enter') {
     evt.preventDefault();
 
+    const enteredMessage = inputMessageField.value;
     const regExpBot = /^@chaos:/;
-    // if (elInput.value.search(regExpBot) !== -1) {
-    //   funcBot.funcBot(elInput.value);
-    //   elInput.value = '';
-    //   return;
-    // }
 
-    const messageFromUserObject = {
+    const message = {
       id: uuid.v4(),
       type: 'textMsg',
       pin: false,
       favorit: false,
-      msg: elInput.value,
+      msg: enteredMessage,
       dateTime: new Date(),
     };
-    controller.sendMessage(messageFromUserObject);
-    const enteredMessage = elInput.value;
-    elInput.value = '';
+    controller.sendMessage(message);
+
+    inputMessageField.value = '';
 
     if (enteredMessage.search(regExpBot) !== -1) {
       console.log('bot');
-      const botAnswer = funcBot.getAnswer(enteredMessage);
-      const messageFromBotObject = {
+      const botAnswer = bot.getAnswer(enteredMessage);
+      const messageFromBot = {
         id: uuid.v4(),
         type: 'botMsg',
         pin: false,
@@ -153,51 +158,50 @@ elInput.addEventListener('keypress', (evt) => {
         msg: botAnswer,
         dateTime: new Date(),
       };
-      controller.sendMessage(messageFromBotObject);
+      controller.sendMessage(messageFromBot);
     }
   }
 });
 
-// **************** rec AV *********************
-const elPopup = document.querySelector('.popup');
-const elPopupInput = document.querySelector('.popup-inp');
-const elPopupCancel = document.querySelector('.popup-cancel');
-const elPopupOk = document.querySelector('.popup-ok');
+// ***************** popup controls ************************************
 
-// popup cancel
-elPopupCancel.addEventListener('click', () => {
-  elPopup.classList.add('hidden');
+const popupElement = document.querySelector('.popup');
+const popupInputField = document.querySelector('.popup-inp');
+const popupCancelButton = document.querySelector('.popup-cancel');
+const popupOkButton = document.querySelector('.popup-ok');
+
+popupCancelButton.addEventListener('click', () => {
+  popupElement.classList.add('hidden');
   return false;
 });
 
-// popup OK
-elPopupOk.addEventListener('click', () => {
-  if (elPopupInput.classList.contains('hidden')) {
-    elPopup.classList.add('hidden');
+popupOkButton.addEventListener('click', () => {
+  if (popupInputField.classList.contains('hidden')) {
+    popupElement.classList.add('hidden');
   }
 });
 
-// **************** GEO *********************
-const elGEO = document.querySelector('.geo-button');
+// ***************** post geoposition ************************************
+const getGeopositionButton = document.querySelector('.geo-button');
 
-elGEO.addEventListener('click', async () => {
-  const GEOteg = await getGEO(popup);
-  elPopup.classList.add('hidden');
-  console.log(GEOteg);
-  const objMessage = {
+getGeopositionButton.addEventListener('click', async () => {
+  const coords = await getGeoposition(popup);
+  popupElement.classList.add('hidden');
+  console.log(coords);
+  const message = {
     id: uuid.v4(),
     type: 'textMsg',
     pin: false,
     favorit: false,
-    msg: GEOteg,
+    msg: coords,
     dateTime: new Date(),
   };
-  controller.sendMessage(objMessage);
+  controller.sendMessage(message);
 });
 
-// **************** export *********************
-const elExport = document.querySelector('#export-history');
+// **************** export service history *********************
+const exportHistoryButton = document.querySelector('#export-history');
 
-elExport.addEventListener(('click'), async () => {
+exportHistoryButton.addEventListener(('click'), async () => {
   controller.exportHistory();
 });

@@ -1,25 +1,26 @@
 export default class Bot {
   constructor() {
     this.weather = [
-      'So much cold today!', 'The weather is warm :))',
-      'The sun is shining like fire!',
+      'It`s too cold today!',
+      'The weather is warm :))',
+      'Hot like in hell!!!',
       'Raining... so wet in the street',
     ];
     this.virus = [
-      'Stay home - virus wherever!!!',
+      'Stay home - virus is everywhere!!!',
       'Today +6568 infected... it`s a shitty',
-      'In Europe the virus is retreating! Maybe all is not so bad?',
+      'The virus is retreating in Europe! Isn`t all so bad?',
       'Don`t give up! This is temporary...',
     ];
     this.cinema = [
       'Try "Love The Hard Way"',
       'May be you don`t see "The King`s Speech"',
-      '"Vicky Cristina Barcelona" - I advise you to whath it',
+      '"Vicky Cristina Barcelona" - I advice you to whatch it',
     ];
     this.music = [
       'The day to listen "Queen"',
       'My recommendation is Müslüm Maqomayev',
-      'What about "Scorpions"?',
+      'What`s about "Scorpions"?',
       'Love drums? Steve Gadd is just for you!',
     ];
     this.books = [
