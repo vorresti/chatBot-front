@@ -3,12 +3,41 @@
   margin: 0;
 }
 
+body {
+  height: 100vw;
+  background-color: #000000;
+}
+
 .password-window {
-  border: 1px solid;
+  margin: 50px auto 0 auto;
   border-radius: 15px;
   padding: 10px;
-  width: 300px;
+  width: 500px;
   text-align: center;
+  background-color: #696969;
+  color: #ffffff
+}
+
+#password-input-field {
+  margin: 15px auto 15px auto;
+  width: 300px;
+  border: none;
+  border-radius: 15px;
+  padding-left: 10px;
+}
+
+#password-ok-button {
+  width: 100px;
+  margin: auto;
+  background-color: #dc55ee;
+  color: #ffffff;
+  border: none;
+  border-radius: 15px;
+}
+
+#password-ok-button:hover {
+  background-color: #AB5BCB;
+  color: #000000
 }
 
 #alert {
@@ -90,17 +119,20 @@ input {
 
 .app-window {
   display: flex;
+  margin: auto;
   flex-direction: column;
-  width: 700px;
+  width: 800px;
   min-height: 200px;
   max-height: 700px;
-  background-color: #fff8dc;
 }
 
 .app-header {
   display: flex;
   justify-content: flex-end;
-  background-color: #d4d3d3;
+  background-color: #000000;
+  border-bottom: 2px solid #696969;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #input-type-file {
@@ -172,6 +204,9 @@ input {
   width: 100%;
   height: 100%;
   padding: 5px 80px 5px 5px;
+  background-color: #C4C4C4;
+  border: none;
+  border-radius: 10px;
 }
 
 .av-buttons {
@@ -184,14 +219,14 @@ input {
 }
 
 .av {
-  border: 1px solid;
-  width: 35px;
-  height: 35px;
+  /* border: 1px solid; */
+  width: 25px;
+  height: 25px;
   border-radius: 25px;
   margin-right: 10px;
   cursor: pointer;
   background-position: center;
-  background-size: 25px;
+  /* background-size: 25px; */
   background-repeat: no-repeat;
 }
 
@@ -297,19 +332,19 @@ input {
 
 .item-message {
   position: relative;
-  border: 1px solid;
   border-radius: 15px;
   padding: 10px;
-  background-color: #f0f8ff;
+  background-color: #696969;
   width: 80%;
   margin-left: auto;
   margin-bottom: 10px;
+  color: #ffffff;
 }
 
 .bot {
   margin-right: auto;
   margin-left: 0;
-  background-color: #ceffee;
+  background-color: #696969;
 }
 
 .loaded {
