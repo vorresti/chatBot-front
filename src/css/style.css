@@ -4,7 +4,6 @@
 }
 
 body {
-  height: 100vw;
   background-color: #000000;
 }
 
@@ -24,20 +23,13 @@ body {
   border: none;
   border-radius: 15px;
   padding-left: 10px;
+  background-color: #C4C4C4;
 }
 
 #password-ok-button {
-  width: 100px;
   margin: auto;
-  background-color: #dc55ee;
   color: #ffffff;
   border: none;
-  border-radius: 15px;
-}
-
-#password-ok-button:hover {
-  background-color: #AB5BCB;
-  color: #000000
 }
 
 #alert {
@@ -122,8 +114,8 @@ input {
   margin: auto;
   flex-direction: column;
   width: 800px;
-  min-height: 200px;
-  max-height: 700px;
+  min-height: 400px;
+  max-height: 720px;
 }
 
 .app-header {
@@ -138,6 +130,7 @@ input {
 #input-type-file {
   position: absolute;
   z-index: -1;
+  opacity: 0;
 }
 
 .messages-field {
@@ -203,7 +196,7 @@ input {
 #input-message-field {
   width: 100%;
   height: 100%;
-  padding: 5px 80px 5px 5px;
+  padding: 5px 115px 5px 10px;
   background-color: #C4C4C4;
   border: none;
   border-radius: 10px;
@@ -219,15 +212,19 @@ input {
 }
 
 .av {
-  /* border: 1px solid; */
   width: 25px;
   height: 25px;
   border-radius: 25px;
   margin-right: 10px;
   cursor: pointer;
   background-position: center;
-  /* background-size: 25px; */
+  background-size: 15px;
   background-repeat: no-repeat;
+  background-color: #ffffff;
+}
+
+.av:hover {
+  background-color: #dc55ee;
 }
 
 #audio-rec-button {
@@ -248,7 +245,7 @@ input {
 }
 
 .favorit {
-  background-color: #bfffa6;
+  background-color: #AB5BCB;
 }
 
 .handle-add-file {
@@ -259,7 +256,6 @@ input {
 .download {
   background-image: url('../img/download.png');
   border: none;
-  background-size: 30px;
   background-color: #ffffff;
   position: absolute;
   z-index: 1;
@@ -281,10 +277,20 @@ input {
 
 #save-rec-button {
   background-image: url('../img/ok.png');
+  background-color: #38ad29;
+}
+
+#save-rec-button:hover {
+  background-color: #50ec3b;
 }
 
 #cancel-rec-button {
   background-image: url('../img/cancel.png');
+  background-color: #d83c3c;
+}
+
+#cancel-rec-button:hover {
+  background-color: #ff0000;
 }
 
 #timer {
@@ -302,39 +308,58 @@ input {
 
 .popup {
   position: absolute;
-  border: 1px solid;
   border-radius: 15px;
   width: 450px;
   padding: 10px;
   top: 20px;
   left: 20px;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #696969;
+}
+
+.popup-header {
+  text-align: center;
+  font-size: 25px;
+}
+
+.popup-msg {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .popup-inp {
   width: 100%;
+  background-color: #c4c4c4;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 15px 5px 15px;
 }
 
 .popup-buttons {
   display: flex;
-  width: fit-content;
-  margin-left: auto;
-  margin-top: 10px;
+  margin: auto;
+  justify-content: space-evenly;
 }
 
 .button {
-  border: 1px solid;
+  width: 100px;
+  text-align: center;
+  background-color: #dc55ee;
   border-radius: 15px;
   padding: 15px;
   margin-top: 15px;
   cursor: pointer;
 }
 
+.button:hover {
+  background-color: #AB5BCB;
+}
+
 .item-message {
   position: relative;
   border-radius: 15px;
   padding: 10px;
-  background-color: #696969;
+  background-color: #464646;
   width: 80%;
   margin-left: auto;
   margin-bottom: 10px;
@@ -344,7 +369,7 @@ input {
 .bot {
   margin-right: auto;
   margin-left: 0;
-  background-color: #696969;
+  background-color: #463939;
 }
 
 .loaded {
