@@ -29,14 +29,23 @@ export default class Popup {
       this.popupInputField.classList.remove('hidden');
       this.popupCancelButton.classList.remove('hidden');
     }
+    this.popupInputField.addEventListener('keydown', () => {
+      if (this.popupInputField.classList.contains('invalid-value')) {
+        this.popupInputField.classList.remove('invalid-value');
+      }
+    });
   }
 
   validate() {
     if (validGeoposition(this.popupInputField.value)) {
-      this.popupInputField.style.borderColor = '#000000';
+      // this.popupInputField.style.borderColor = '#000000';
+      if (this.popupInputField.classList.contains('invalid-value')) {
+        this.popupInputField.classList.remove('invalid-value');
+      }
       return true;
     }
-    this.popupInputField.style.borderColor = '#ff0000';
+    // this.popupInputField.style.borderColor = '#ff0000';
+    this.popupInputField.classList.add('invalid-value');
     return false;
   }
 }

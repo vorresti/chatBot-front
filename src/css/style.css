@@ -330,7 +330,7 @@ input {
 .popup-inp {
   width: 100%;
   background-color: #c4c4c4;
-  border: none;
+  border: 1px solid #696969;
   border-radius: 15px;
   padding: 5px 15px 5px 15px;
 }
@@ -353,6 +353,10 @@ input {
 
 .button:hover {
   background-color: #AB5BCB;
+}
+
+.invalid-value {
+  border: 1px solid #ff0000;
 }
 
 .item-message {
