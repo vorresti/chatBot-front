@@ -124,7 +124,7 @@ export default class Messanger {
 
   getAppMarkup(message, name) {
     const appMarkup = `
-      <div class="applicat"></div>
+      <div class="application"></div>
       <p class="name">${name}</p>
       <a class="download av" href="${message}" download="app"></a>
     `;

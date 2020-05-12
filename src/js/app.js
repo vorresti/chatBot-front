@@ -13,7 +13,7 @@ popup.create();
 
 let controller = null;
 
-// ******************** enter password *************************************
+// ******************** app init *************************************
 
 const passwordWindow = document.querySelector('.password-window');
 const passwordOkButton = document.querySelector('#password-ok-button');
@@ -35,8 +35,8 @@ passwordOkButton.addEventListener('click', async () => {
 });
 
 // ******************** upload file *************************************
+
 function upload(file) {
-  console.log(file.name);
   const fileID = uuid.v4();
   const typeRegExp = /[a-z]+/;
   const typeFile = file.type.match(typeRegExp)[0];
@@ -62,18 +62,18 @@ function upload(file) {
 
 const addFileButton = document.querySelector('.handle-add-file');
 const inputTypeFile = document.querySelector('#input-type-file');
-const dropFile = document.querySelector('#drop-file');
+const messagesField = document.querySelector('.messages-field');
 
 addFileButton.addEventListener('click', () => {
   inputTypeFile.value = null;
   inputTypeFile.dispatchEvent(new MouseEvent('click'));
 });
 
-dropFile.addEventListener('dragover', (event) => {
+messagesField.addEventListener('dragover', (event) => {
   event.preventDefault();
 });
 
-dropFile.addEventListener('drop', (event) => {
+messagesField.addEventListener('drop', (event) => {
   event.preventDefault();
   const files = Array.from(event.dataTransfer.files);
   for (const file of files) {
@@ -88,7 +88,7 @@ inputTypeFile.addEventListener('change', (event) => {
 
 // ***************** lazy-load scroll ************************************
 
-dropFile.addEventListener('scroll', (event) => {
+messagesField.addEventListener('scroll', (event) => {
   if (event.target.scrollTop === 0) {
     controller.lazyLoad();
   }
@@ -96,7 +96,7 @@ dropFile.addEventListener('scroll', (event) => {
 
 // ***************** favorits controls ************************************
 
-dropFile.addEventListener('click', (event) => {
+messagesField.addEventListener('click', (event) => {
   const selectedElement = event.target;
   if (selectedElement.classList.contains('favor')) {
     const parentElement = selectedElement.closest('.item-message');
@@ -148,7 +148,6 @@ inputMessageField.addEventListener('keypress', (evt) => {
     inputMessageField.value = '';
 
     if (enteredMessage.search(regExpBot) !== -1) {
-      console.log('bot');
       const botAnswer = bot.getAnswer(enteredMessage);
       const messageFromBot = {
         id: uuid.v4(),
@@ -182,12 +181,12 @@ popupOkButton.addEventListener('click', () => {
 });
 
 // ***************** post geoposition ************************************
+
 const getGeopositionButton = document.querySelector('.geo-button');
 
 getGeopositionButton.addEventListener('click', async () => {
   const coords = await getGeoposition(popup);
   popupElement.classList.add('hidden');
-  console.log(coords);
   const message = {
     id: uuid.v4(),
     type: 'textMsg',
@@ -199,7 +198,10 @@ getGeopositionButton.addEventListener('click', async () => {
   controller.sendMessage(message);
 });
 
-// **************** export service history *********************
+// **************** export history for preview to check app *********************
+
+// it`s not for user, it`s for creating history file and preview history for checking app
+
 const exportHistoryButton = document.querySelector('#export-history');
 
 exportHistoryButton.addEventListener(('click'), async () => {

@@ -55,7 +55,7 @@ export default class Recorder {
         const videoPreview = document.createElement('video');
         videoPreview.controls = true;
         videoPreview.muted = 'muted';
-        videoPreview.className = 'mini-video';
+        videoPreview.className = 'video-preview';
         document.body.appendChild(videoPreview);
         videoPreview.srcObject = stream;
         videoPreview.play();
@@ -110,7 +110,7 @@ export default class Recorder {
           };
         }
         if (recVideo) {
-          document.body.removeChild(document.querySelector('.mini-video'));
+          document.body.removeChild(document.querySelector('.video-preview'));
         }
         this.recordingButtons.classList.remove('hidden');
         this.stopRecButtons.classList.add('hidden');

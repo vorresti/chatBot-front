@@ -38,28 +38,28 @@ export default class Bot {
 
     switch (question) {
       case 'weather':
-        answer = this.randomMsg(this.weather);
+        answer = this.randomAnswer(this.weather);
         break;
       case 'virus':
-        answer = this.randomMsg(this.virus);
+        answer = this.randomAnswer(this.virus);
         break;
       case 'cinema':
-        answer = this.randomMsg(this.cinema);
+        answer = this.randomAnswer(this.cinema);
         break;
       case 'music':
-        answer = this.randomMsg(this.music);
+        answer = this.randomAnswer(this.music);
         break;
       case 'book':
-        answer = this.randomMsg(this.books);
+        answer = this.randomAnswer(this.books);
         break;
       default:
-        answer = 'Sorry, I don`t know what to say...';
+        answer = 'Sorry, I don`t know what to say... Command is not correct';
         break;
     }
     return answer;
   }
 
-  randomMsg(answersArray) {
+  randomAnswer(answersArray) {
     this.randomIndex = Math.floor(Math.random() * answersArray.length);
     return answersArray[this.randomIndex];
   }

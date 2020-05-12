@@ -65,7 +65,7 @@ export default class Controller {
       try {
         this.uploadMsg(message);
       } catch (e) {
-        console.log('error upload...');
+        console.log('upload error...');
         console.log(e);
       }
     } else {
