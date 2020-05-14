@@ -30,7 +30,7 @@ export default class Recorder {
 
   async avRecorder(recVideo = false) {
     if (!navigator.mediaDevices) {
-      const msg = 'Your browser don`t support this function';
+      const msg = 'Your browser (or hardware) don`t support this function';
       this.popup.showPopup('', msg);
       return;
     }
@@ -41,7 +41,7 @@ export default class Recorder {
       let timing = null;
 
       if (!window.MediaRecorder) {
-        const msg = 'Please, give permission in your browser to record audio content';
+        const msg = 'Please, give permission in your browser to record audio/video';
         this.popup.showPopup('', msg);
         return;
       }
@@ -98,7 +98,7 @@ export default class Recorder {
             mediaElement.src = fileReader.result;
             mediaElement.controls = true;
 
-            const objMessage = {
+            const mediaMessage = {
               id: elementID,
               type: mediaContentType,
               pin: false,
@@ -106,7 +106,7 @@ export default class Recorder {
               msg: fileReader.result,
               dateTime: new Date(),
             };
-            this.controller.sendMessage(objMessage);
+            this.controller.sendMessage(mediaMessage);
           };
         }
         if (recVideo) {

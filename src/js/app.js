@@ -21,9 +21,9 @@ const appWindow = document.querySelector('.app-window');
 
 passwordOkButton.addEventListener('click', async () => {
   const passwordInputField = document.querySelector('#password-input-field');
-  const keyCrypt = passwordInputField.value;
+  const passwordValue = passwordInputField.value;
 
-  controller = new Controller(keyCrypt);
+  controller = new Controller(passwordValue);
   controller.init();
 
   passwordInputField.value = '';
@@ -38,8 +38,8 @@ passwordOkButton.addEventListener('click', async () => {
 
 function upload(file) {
   const fileID = uuid.v4();
-  const typeRegExp = /[a-z]+/;
-  const typeFile = file.type.match(typeRegExp)[0];
+  const fileTypeRegExp = /[a-z]+/;
+  const fileType = file.type.match(fileTypeRegExp)[0];
 
   const fileReader = new FileReader();
   fileReader.readAsDataURL(file);
@@ -47,7 +47,7 @@ function upload(file) {
   fileReader.onload = () => {
     const message = {
       id: fileID,
-      type: typeFile,
+      type: fileType,
       pin: false,
       favorit: false,
       name: file.name,
@@ -200,7 +200,8 @@ getGeopositionButton.addEventListener('click', async () => {
 
 // **************** export history for preview to check app *********************
 
-// it`s not for user, it`s for creating history file and preview history for checking app
+// it`s not for user, it`s for creating history file (../public/msg.json)
+// and preview history for checking app
 
 const exportHistoryButton = document.querySelector('#export-history');
 

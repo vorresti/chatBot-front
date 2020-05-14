@@ -2,8 +2,8 @@ import CryptoJS from 'crypto-js';
 // const CryptoJS = require('crypto-js');
 
 export default class Crypt {
-  constructor(keyCrypt) {
-    this.keyCrypt = keyCrypt;
+  constructor(passwordValue) {
+    this.keyCrypt = passwordValue;
   }
 
   enCrypt(data) {
@@ -14,8 +14,9 @@ export default class Crypt {
     if (data) {
       try {
         const bytes = CryptoJS.AES.decrypt(data, this.keyCrypt);
-        const retStr = bytes.toString(CryptoJS.enc.Utf8);
-        return retStr;
+        // const retStr = bytes.toString(CryptoJS.enc.Utf8);
+        // return retStr;
+        return bytes.toString(CryptoJS.enc.Utf8);
       } catch (e) {
         console.log(e);
         return null;

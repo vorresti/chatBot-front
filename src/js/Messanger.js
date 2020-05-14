@@ -4,9 +4,13 @@ import getDate from './getDate.js';
 import 'highlight.js/styles/github.css';
 
 export default class Messanger {
-  constructor(messagesField, crypton) {
+  // constructor(messagesField, crypton) {
+  //   this.messagesField = messagesField;
+  //   this.crypton = crypton;// may be crypton is unnecessary here?????????????????????????????
+  // }
+
+  constructor(messagesField) {
     this.messagesField = messagesField;
-    this.crypton = crypton;// may be crypton is unnecessary here?????????????????????????????
   }
 
   addMessage(message, positionForInsert) {
@@ -92,7 +96,7 @@ export default class Messanger {
     // added from me
     let currentName = name;
     if (!name) {
-      currentName = 'recorded video';
+      currentName = 'Recorded video';
     }
     // end
     const videoMarkup = `
@@ -109,7 +113,7 @@ export default class Messanger {
     // added from me
     let currentName = name;
     if (!name) {
-      currentName = 'recorded audio';
+      currentName = 'Recorded audio';
     }
     // end
     const audioMarkup = `

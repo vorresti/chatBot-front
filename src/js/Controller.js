@@ -6,17 +6,18 @@ const currentMessages = [];
 const pathToServer = 'ahj-diploma.herokuapp.com';
 
 export default class Controller {
-  constructor(crypton) {
-    this.keyCrypt = crypton;
+  constructor(passwordValue) {
+    this.keyCrypt = passwordValue;
     this.wsURL = `wss://${pathToServer}/ws`;
     this.url = `https://${pathToServer}/`;
-    this.crypton = new Crypton(crypton);
+    this.crypton = new Crypton(passwordValue);
     this.lazyLoadActive = true;
   }
 
   async init() {
     this.messagesField = document.querySelector('.messages-field');
-    this.messanger = new Messanger(this.messagesField, this.crypton);
+    // this.messanger = new Messanger(this.messagesField, this.crypton);
+    this.messanger = new Messanger(this.messagesField);
     this.initWS();
     const response = await fetch(`${this.url}initmsg`);
     await response.text();
@@ -65,7 +66,7 @@ export default class Controller {
       try {
         this.uploadMsg(message);
       } catch (e) {
-        console.log('upload error...');
+        console.log('Oops, upload error...');
         console.log(e);
       }
     } else {
@@ -84,7 +85,7 @@ export default class Controller {
     worker.postMessage({
       file: message,
       keyCrypt: this.keyCrypt,
-      workCrypt: 'enCrypt',
+      workerCommand: 'enCrypt',
     });
   }
 
@@ -113,22 +114,22 @@ export default class Controller {
       worker.postMessage({
         file: responseBody,
         keyCrypt: this.keyCrypt,
-        workCrypt: 'deCrypt',
+        workerCommand: 'deCrypt',
       });
     }
   }
 
-  changeFavorit(messageID, data) {
+  changeFavorit(messageID, favoritValue) {
     const itemIndex = currentMessages.findIndex((item) => item.id === messageID);
-    currentMessages[itemIndex].favorit = data;
+    currentMessages[itemIndex].favorit = favoritValue;
 
     fetch(`${this.url}favorits`, {
       body: JSON.stringify({
         id: messageID,
-        value: data,
+        value: favoritValue,
       }),
       method: 'POST',
-      headers: this.contentTypeHeader, // not used and declareted!!!!!!!!!!!
+      // headers: this.contentTypeHeader, // not used and declareted!!!!!!!!!!!
     });
   }
 
